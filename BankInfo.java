@@ -1,6 +1,6 @@
 /* Leksjon 4: Obligatorisk oppgave (Bankinformasjon) 
  *******************************************************************
- * Levert av: Studentnr og navn
+ * Levert av: 216756, Robert Anholt
  *******************************************************************
  * Programmet bruker verktøyklassen 'Hjelp' som inneholder relevante
  * metoder (innlesing, avrunding) og konstanter (kurs og meny). 
@@ -45,7 +45,20 @@ public class BankInfo {
        // skriv ut beløpene avrundet til 2 siffer etter komma
        // skriv ut vekslingskursen
     // Skriv feilmelding ved ulovlig beløp
-    showMessageDialog(null, "1: Veksling");
+        double valuta = 0;
+        do { 
+           valuta = Hjelp.lesInn("Gi et dollarbeløp:");
+          if (valuta < 0)
+            showMessageDialog(null, "Ulovlig beløp!");
+        } while (valuta < 0);
+    double bUSD = Hjelp.avrund(valuta);
+    double bNOK = Hjelp.avrund(Hjelp.USD_NKR*bUSD);
+    showMessageDialog(null,  "1: Veksling" + "\n"
+                           + "____________________" + "\n"
+                           + "Beløp i USD: " + bUSD + "\n"
+                           + "Kurs: 1 USD = " + Hjelp.USD_NKR + " NOK" + "\n"
+                           + "Beløp i NOK: " + bNOK + "\n"
+                           + "____________________");
   }
 
   /* Hjelpemetode for å gi info om sparing med ett innskud som
@@ -53,15 +66,29 @@ public class BankInfo {
    */
   private static void sparing() {     
     // Les inn via kall på hjelpe-metode: et sparebeløp, en årsrente 
+    double sparebeløp = Hjelp.lesInn("Gi sparebeløp:");
+    double årsrente = Hjelp.lesInn("Gi årsrente:");
     // og et antall år i spareperioden.
+    double antallår = Hjelp.lesInn("Gi antall år:");
     // Hvis lovlige inndata
+    if (sparebeløp >0 && årsrente >0 && antallår >0)
        // skriv ut (kvitter) de aktuelle inndataene
+
        // beregn år for år: påløpt rente og ny saldo (økt beløp)
        // hvis mindre enn eller lik 10 år 
           // skriv ut år, renter og saldo
-       // Etter beregningene skrives sluttsaldo ut hvis år er over 10 
+       // Etter beregningene skrives sluttsaldo ut hvis år er over 10
+
+       showMessageDialog(null, "2: Sparing" + "\n"
+                             + "____________________" + "\n"
+                             + "Sparebeløp: " + sparebeløp + "\n"
+                             + "Årlig rente: " + årsrente + "%" + "\n"
+                             + "Antall år: " + antallår + "\n"
+                             + "____________________" + "\n"
+                             + "År     Rente     Saldo" + "\n"
+                             + "____________________" + "\n"); 
     // Skriv feilmelding ved ulovlige inndata 
-    showMessageDialog(null, "2: Sparing");
+
   } 
 
   /* Hjelpemetode for å gi info om annuitetslån, dvs. et fast årlig 
