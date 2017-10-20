@@ -51,9 +51,9 @@ public class BankInfo {
           if (valuta < 0)
             showMessageDialog(null, "Ulovlig beløp!");
         } while (valuta < 0);
-    double bUSD = Hjelp.avrund(valuta);
-    double bNOK = Hjelp.avrund(Hjelp.USD_NKR*bUSD);
-    showMessageDialog(null,  "1: Veksling" + "\n"
+         double bUSD = Hjelp.avrund(valuta);
+         double bNOK = Hjelp.avrund(Hjelp.USD_NKR*bUSD);
+         showMessageDialog(null,  "1: Veksling" + "\n"
                            + "____________________" + "\n"
                            + "Beløp i USD: " + bUSD + "\n"
                            + "Kurs: 1 USD = " + Hjelp.USD_NKR + " NOK" + "\n"
@@ -91,21 +91,18 @@ public class BankInfo {
       for(int i = 1; i<=antallår; i++){
           rente = saldo*årsrente/100;
           saldo += rente;
-
        // hvis mindre enn eller lik 10 år
-          
           // skriv ut år, renter og saldo
             rente = Hjelp.avrund(rente);
             saldo = Hjelp.avrund(saldo);
-           if (i <=10) utTekst += (i + ":    " + rente + "     " + saldo + "\n");
-              
+
+           if (i <=10) 
+            utTekst += (i + ":    " + rente + "     " + saldo + "\n");   
        // Etter beregningene skrives sluttsaldo ut hvis år er over 10
               if (antallår > 10 && i == antallår) 
                 utTekst += ("____________________" + "\n"
                         + "Saldo etter " + antallår + " År:" + " " + saldo);
         }
-         
-         
         showMessageDialog(null, utTekst);
     // Skriv feilmelding ved ulovlige inndata
    }
@@ -128,21 +125,19 @@ public class BankInfo {
 
      else {
        // skriv ut (kvitter) de aktuelle inndataene
-           utTekst = "3: Lån" + "\n"
-                   + "____________________" + "\n"; 
+        utTekst = "3: Lån" + "\n"
+                + "____________________" + "\n"; 
 
-              utTekst +=      ("Lånebeløp: " + lånebeløp + "\n"
-                             + "Årlig rente: " + årsrente + "%" + "\n"
-                             + "Antall år: " + antallår + "\n"
-                             + "____________________" + "\n");
+        utTekst += ("Lånebeløp: " + lånebeløp + "\n"
+                 + "Årlig rente: " + årsrente + "%" + "\n"
+                 + "Antall år: " + antallår + "\n"
+                 + "____________________" + "\n");
        // beregn årlig betaling (nettsøk: formel for annuitetslån)
        //        bruk matematiske metoder (Math) til regnearbeidet
-      double betaling = lånebeløp * årsrente / (1- 1 / Math.pow(1 + årsrente/100, antallår))/100;
-
-
-       betaling = Hjelp.avrund(betaling);
+        double betaling = lånebeløp * årsrente / (1- 1 / Math.pow(1 + årsrente/100, antallår))/100;
+        betaling = Hjelp.avrund(betaling);
        // skriv ut årlig betaling
-       utTekst += ("Årlig betaling: " + betaling);        
+        utTekst += ("Årlig betaling: " + betaling);        
         showMessageDialog(null, utTekst); 
         }
     // Skriv feilmelding ved ulovlige inndata 
