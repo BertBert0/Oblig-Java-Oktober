@@ -29,8 +29,7 @@ public class Hjelp {
   public static double lesInn(String ledetekst) {  	
     // Metode som ber om og leser inn en desimalverdi fra 
     // brukeren, presentert ved 'ledetekst' i inndialogvindu.
-    String tallTekst = showInputDialog(ledetekst + "\n"
-                                      + "(kan være desimalverdi!)");
+    String tallTekst = showInputDialog(ledetekst);
     double tall = parseDouble(tallTekst);
     return tall;
   } 

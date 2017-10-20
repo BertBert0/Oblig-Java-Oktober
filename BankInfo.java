@@ -64,46 +64,89 @@ public class BankInfo {
   /* Hjelpemetode for å gi info om sparing med ett innskud som
    * følges over et gitt antall år til en gitt årsrente (%).
    */
-  private static void sparing() {     
+  private static void sparing() {
+    String utTekst = "";
     // Les inn via kall på hjelpe-metode: et sparebeløp, en årsrente 
     double sparebeløp = Hjelp.lesInn("Gi sparebeløp:");
     double årsrente = Hjelp.lesInn("Gi årsrente:");
     // og et antall år i spareperioden.
-    double antallår = Hjelp.lesInn("Gi antall år:");
+    int antallår = (int)Hjelp.lesInn("Gi antall år:");
     // Hvis lovlige inndata
-    if (sparebeløp >0 && årsrente >0 && antallår >0)
+    if (sparebeløp < 1 || årsrente < 1 || antallår < 1)
+      showMessageDialog(null, "Ulovlig Inndata!");
        // skriv ut (kvitter) de aktuelle inndataene
+    else {
+      utTekst = "2: Sparing" + "\n"
+              + "____________________" + "\n"; 
 
-       // beregn år for år: påløpt rente og ny saldo (økt beløp)
-       // hvis mindre enn eller lik 10 år 
-          // skriv ut år, renter og saldo
-       // Etter beregningene skrives sluttsaldo ut hvis år er over 10
-
-       showMessageDialog(null, "2: Sparing" + "\n"
-                             + "____________________" + "\n"
-                             + "Sparebeløp: " + sparebeløp + "\n"
+      utTekst += ("Sparebeløp: " + sparebeløp + "\n"
                              + "Årlig rente: " + årsrente + "%" + "\n"
                              + "Antall år: " + antallår + "\n"
-                             + "____________________" + "\n"
-                             + "År     Rente     Saldo" + "\n"
-                             + "____________________" + "\n"); 
-    // Skriv feilmelding ved ulovlige inndata 
+                             + "____________________" + "\n");
+       // beregn år for år: påløpt rente og ny saldo (økt beløp)
+        utTekst += ("År     Rente     Saldo" + "\n");
+        double rente ;
+        double saldo = sparebeløp;  
+
+      for(int i = 1; i<=antallår; i++){
+          rente = saldo*årsrente/100;
+          saldo += rente;
+
+       // hvis mindre enn eller lik 10 år
+          
+          // skriv ut år, renter og saldo
+            rente = Hjelp.avrund(rente);
+            saldo = Hjelp.avrund(saldo);
+           if (i <=10) utTekst += (i + ":    " + rente + "     " + saldo + "\n");
+              
+       // Etter beregningene skrives sluttsaldo ut hvis år er over 10
+              if (antallår > 10 && i == antallår) 
+                utTekst += ("____________________" + "\n"
+                        + "Saldo etter " + antallår + " År:" + " " + saldo);
+        }
+         
+         
+        showMessageDialog(null, utTekst);
+    // Skriv feilmelding ved ulovlige inndata
+   }
 
   } 
 
   /* Hjelpemetode for å gi info om annuitetslån, dvs. et fast årlig 
    * beløp for å betale et lån til en gitt rente over et antall år. 
    */
-  private static void låning() {     
+  private static void låning() { 
+    String utTekst = "";    
     // Les inn via kall på hjelpe-metode: et lånebeløp, en årsrente  
+    double lånebeløp = Hjelp.lesInn("Gi lånebeløp:");
+    double årsrente = Hjelp.lesInn("Gi årsrente:");
     // og et antall år for nedbetalingsperioden.
+    int antallår = (int)Hjelp.lesInn("Gi antall år for nedbetaling:");
     // Hvis lovlige inndata:
+     if (lånebeløp < 1 || årsrente < 1 || antallår < 1)
+          showMessageDialog(null, "Ulovlig inndata!");
+
+     else {
        // skriv ut (kvitter) de aktuelle inndataene
+           utTekst = "3: Lån" + "\n"
+                   + "____________________" + "\n"; 
+
+              utTekst +=      ("Lånebeløp: " + lånebeløp + "\n"
+                             + "Årlig rente: " + årsrente + "%" + "\n"
+                             + "Antall år: " + antallår + "\n"
+                             + "____________________" + "\n");
        // beregn årlig betaling (nettsøk: formel for annuitetslån)
        //        bruk matematiske metoder (Math) til regnearbeidet
+      double betaling = lånebeløp * årsrente / (1- 1 / Math.pow(1 + årsrente/100, antallår))/100;
+
+
+       betaling = Hjelp.avrund(betaling);
        // skriv ut årlig betaling
+       utTekst += ("Årlig betaling: " + betaling);        
+        showMessageDialog(null, utTekst); 
+        }
     // Skriv feilmelding ved ulovlige inndata 
-    showMessageDialog(null, "3: Låning"); 
+  
   }
 
   /* Hjelpemetode for å gi en standard feilmelding i situasjonene
@@ -111,6 +154,7 @@ public class BankInfo {
    */ 
   private static void feilmelding() {  
     // Skriv en generell feilmelding som kan brukes overalt her
+    showMessageDialog(null, "404: Brain not found!");
   }  
 
 }
