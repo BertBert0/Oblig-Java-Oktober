@@ -76,15 +76,15 @@ public class BankInfo {
       showMessageDialog(null, "Ulovlig Inndata!");
        // skriv ut (kvitter) de aktuelle inndataene
     else {
-      utTekst = "2: Sparing" + "\n"
-              + "____________________" + "\n"; 
-
-      utTekst += ("Sparebeløp: " + sparebeløp + "\n"
-                             + "Årlig rente: " + årsrente + "%" + "\n"
-                             + "Antall år: " + antallår + "\n"
-                             + "____________________" + "\n");
+        sparebeløp = Hjelp.avrund(sparebeløp);
        // beregn år for år: påløpt rente og ny saldo (økt beløp)
-        utTekst += ("År     Rente     Saldo" + "\n");
+        utTekst += ( "2: Sparing" + "\n"
+                + "____________________" + "\n"
+                +"Sparebeløp: " + sparebeløp + "\n"
+                + "Årlig rente: " + årsrente + "%" + "\n"
+                + "Antall år: " + antallår + "\n"
+                + "____________________" + "\n"
+                + "År     Rente     Saldo" + "\n");
         double rente ;
         double saldo = sparebeløp;  
 
