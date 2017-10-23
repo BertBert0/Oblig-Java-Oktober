@@ -19,7 +19,7 @@ public class BankInfo {
     boolean fortsett = true;
     do {
       // Leser inn ønsket info-tjeneste fra en meny
-      int valg = parseInt( showInputDialog(Hjelp.MENY) ); 
+      int valg = parseInt(showInputDialog(Hjelp.MENY) ); 
       if (valg == 0)
         fortsett = false;
       else 
@@ -45,9 +45,9 @@ public class BankInfo {
        // skriv ut beløpene avrundet til 2 siffer etter komma
        // skriv ut vekslingskursen
     // Skriv feilmelding ved ulovlig beløp
-        double valuta = 0;
+    double valuta;
         do { 
-           valuta = Hjelp.lesInn("Gi et dollarbeløp:");
+          valuta = Hjelp.lesInn("Gi et dollarbeløp:");
           if (valuta < 0)
             showMessageDialog(null, "Ulovlig beløp!");
         } while (valuta < 0);
@@ -67,15 +67,30 @@ public class BankInfo {
   private static void sparing() {
     String utTekst = "";
     // Les inn via kall på hjelpe-metode: et sparebeløp, en årsrente 
-    double sparebeløp = Hjelp.lesInn("Gi sparebeløp:");
-    double årsrente = Hjelp.lesInn("Gi årsrente:");
+    double sparebeløp;
+    do {
+      sparebeløp = Hjelp.lesInn("Gi sparebeløp:");
+      if (sparebeløp < 0)
+        showMessageDialog(null, "Ulovlig Sparebeløp!");
+    } while (sparebeløp < 0);
+
+    double årsrente;
+    do {
+    årsrente = Hjelp.lesInn("Gi årsrente:");
+          if (årsrente < 0)
+        showMessageDialog(null, "Ulovlig Årsrente!");
+    } while (årsrente < 0);
     // og et antall år i spareperioden.
-    int antallår = (int)Hjelp.lesInn("Gi antall år:");
+
+
+    int antallår;
+    do {
+    antallår = (int)Hjelp.lesInn("Gi antall år:");
+      if (antallår < 0)
+         showMessageDialog(null, "Ulovlig antall År!");
+    } while (antallår < 0);
     // Hvis lovlige inndata
-    if (sparebeløp < 1 || årsrente < 1 || antallår < 1)
-      showMessageDialog(null, "Ulovlig Inndata!");
        // skriv ut (kvitter) de aktuelle inndataene
-    else {
         sparebeløp = Hjelp.avrund(sparebeløp);
        // beregn år for år: påløpt rente og ny saldo (økt beløp)
         utTekst += ( "2: Sparing" + "\n"
@@ -102,10 +117,10 @@ public class BankInfo {
               if (antallår > 10 && i == antallår) 
                 utTekst += ("____________________" + "\n"
                         + "Saldo etter " + antallår + " År:" + " " + saldo);
-        }
+            }
+        
         showMessageDialog(null, utTekst);
     // Skriv feilmelding ved ulovlige inndata
-   }
 
   } 
 
@@ -115,23 +130,36 @@ public class BankInfo {
   private static void låning() { 
     String utTekst = "";    
     // Les inn via kall på hjelpe-metode: et lånebeløp, en årsrente  
-    double lånebeløp = Hjelp.lesInn("Gi lånebeløp:");
-    double årsrente = Hjelp.lesInn("Gi årsrente:");
+    double lånebeløp;
+    do {
+    lånebeløp = Hjelp.lesInn("Gi lånebeløp:");
+    if (lånebeløp < 0)
+       showMessageDialog(null, "Ulovlig lånebeløp!");
+     } while (lånebeløp < 0);
+
+    double årsrente;
+    do {
+    årsrente = Hjelp.lesInn("Gi årsrente:");
+      if (årsrente < 0)
+        showMessageDialog(null, "Ulovlig årsrente!");
+    } while (årsrente < 0);
+
     // og et antall år for nedbetalingsperioden.
-    int antallår = (int)Hjelp.lesInn("Gi antall år for nedbetaling:");
+    int antallår;
+    do {
+    antallår = (int)Hjelp.lesInn("Gi antall år for nedbetaling:");
+      if (antallår < 0)
+        showMessageDialog(null,"Ulovlig antall år!");
+    } while (antallår < 0);
     // Hvis lovlige inndata:
-     if (lånebeløp < 1 || årsrente < 1 || antallår < 1)
-          showMessageDialog(null, "Ulovlig inndata!");
-
-     else {
+    
        // skriv ut (kvitter) de aktuelle inndataene
-        utTekst = "3: Lån" + "\n"
-                + "____________________" + "\n"; 
-
-        utTekst += ("Lånebeløp: " + lånebeløp + "\n"
-                 + "Årlig rente: " + årsrente + "%" + "\n"
-                 + "Antall år: " + antallår + "\n"
-                 + "____________________" + "\n");
+        utTekst = ("3: Lån" + "\n"
+                + "____________________" + "\n"
+                + "Lånebeløp: " + lånebeløp + "\n"
+                + "Årlig rente: " + årsrente + "%" + "\n"
+                + "Antall år: " + antallår + "\n"
+                + "____________________" + "\n");
        // beregn årlig betaling (nettsøk: formel for annuitetslån)
        //        bruk matematiske metoder (Math) til regnearbeidet
         double betaling = lånebeløp * årsrente / (1- 1 / Math.pow(1 + årsrente/100, antallår))/100;
@@ -139,9 +167,8 @@ public class BankInfo {
        // skriv ut årlig betaling
         utTekst += ("Årlig betaling: " + betaling);        
         showMessageDialog(null, utTekst); 
-        }
+        
     // Skriv feilmelding ved ulovlige inndata 
-  
   }
 
   /* Hjelpemetode for å gi en standard feilmelding i situasjonene
